@@ -2,6 +2,8 @@ package warehouse;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Client implements Serializable {
@@ -14,6 +16,9 @@ public class Client implements Serializable {
     private String name;
 
     private String mail = null;
+
+    @OneToMany(mappedBy="client",fetch=FetchType.LAZY)
+    private List<Invoice> invoices = new ArrayList<>();
 
 
     public int getId(){
@@ -40,6 +45,13 @@ public class Client implements Serializable {
         this.mail=mail;
     }
 
+    public List<Invoice> getInvoices(){
+        return invoices;
+    }
+
+    public void setInvoices(List<Invoice> invoices){
+        this.invoices=invoices;
+    }
 
     @Override
     public String toString(){
