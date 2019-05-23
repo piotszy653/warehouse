@@ -11,11 +11,15 @@ public class Warehouse implements Serializable {
     @Id
     @GeneratedValue(strategy= GenerationType.TABLE)
     int id;
-    String name;
-    String address;
+
+    @Column(nullable = false)
+    private String name;
+
+    @Column(nullable = false)
+    private String address;
 
     @OneToMany(mappedBy="warehouse",fetch=FetchType.LAZY)
-     List<Product> products = new ArrayList();
+     private List<Product> products = new ArrayList<>();
 
     public int getId(){
         return id;
@@ -48,6 +52,6 @@ public class Warehouse implements Serializable {
 
     @Override
     public String toString(){
-        return id+"Warehouse: "+name+", address: "+address;
+        return id+". Warehouse: "+name+", address: "+address;
     }
 }
