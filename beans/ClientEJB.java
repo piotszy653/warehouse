@@ -20,7 +20,6 @@ public class ClientEJB implements ClientCRUD {
     public void save(Client client) {
         System.out.println("Creating Client!");
         manager.persist(client);
-        System.out.println("Client created. "+client.toString());
     }
 
     @Override
