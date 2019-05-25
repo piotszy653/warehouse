@@ -1,7 +1,9 @@
-package warehouse;
+package warehouse.interfaces;
+
+import warehouse.domains.Product;
 
 import javax.ejb.Local;
-import java.util.Set;
+import java.util.List;
 
 @Local
 public interface ProductCRUD {
@@ -10,7 +12,7 @@ public interface ProductCRUD {
 
     public abstract Product get(int id);
 
-    public abstract Set<Product> get();
+    public abstract List<Product> get();
 
     public abstract void update(Product product);
 

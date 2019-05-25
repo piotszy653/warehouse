@@ -1,7 +1,9 @@
-package warehouse;
+package warehouse.interfaces;
+
+import warehouse.domains.Warehouse;
 
 import javax.ejb.Local;
-import java.util.Set;
+import java.util.List;
 
 @Local
 public interface WarehouseCRUD {
@@ -10,7 +12,7 @@ public interface WarehouseCRUD {
 
     public abstract Warehouse get(int id);
 
-    public abstract Set<Warehouse> get();
+    public abstract List<Warehouse> get();
 
     public abstract void update(Warehouse warehouse);
 

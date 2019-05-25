@@ -1,7 +1,9 @@
-package warehouse;
+package warehouse.interfaces;
+
+import warehouse.domains.Client;
 
 import javax.ejb.Local;
-import java.util.Set;
+import java.util.List;
 
 @Local
 public interface ClientCRUD {
@@ -10,7 +12,7 @@ public interface ClientCRUD {
 
     public abstract Client get(int id);
 
-    public abstract Set<Client> get();
+    public abstract List<Client> get();
 
     public abstract void update(Client client);
 

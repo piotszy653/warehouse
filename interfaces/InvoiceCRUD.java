@@ -1,7 +1,9 @@
-package warehouse;
+package warehouse.interfaces;
+
+import warehouse.domains.Invoice;
 
 import javax.ejb.Local;
-import java.util.Set;
+import java.util.List;
 
 @Local
 public interface InvoiceCRUD {
@@ -10,7 +12,7 @@ public interface InvoiceCRUD {
 
     public abstract Invoice get(int id);
 
-    public abstract Set<Invoice> get();
+    public abstract List<Invoice> get();
 
     public abstract void update(Invoice invoice);
 

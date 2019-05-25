@@ -1,4 +1,6 @@
-package warehouse;
+package warehouse.domains;
+
+import warehouse.domains.Client;
 
 import javax.persistence.*;
 import java.io.Serializable;
