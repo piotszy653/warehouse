@@ -20,7 +20,6 @@ public class ProductEJB implements ProductCRUD {
     public void save(Product product) {
         System.out.println("Creating product!");
         manager.persist(product);
-        System.out.println("Product created. "+product.toString());
     }
 
     @Override
