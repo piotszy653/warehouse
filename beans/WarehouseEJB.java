@@ -20,7 +20,6 @@ public class WarehouseEJB implements WarehouseCRUD {
     public void save(Warehouse warehouse) {
         System.out.println("Creating Warehouse!");
         manager.persist(warehouse);
-        System.out.println("Warehouse created. "+warehouse.toString());
     }
 
     @Override
