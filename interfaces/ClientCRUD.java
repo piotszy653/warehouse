@@ -14,6 +14,8 @@ public interface ClientCRUD {
 
     public abstract List<Client> get();
 
+    public abstract List<Client> getBy(String filter);
+
     public abstract void update(Client client);
 
     public abstract void delete(int id);

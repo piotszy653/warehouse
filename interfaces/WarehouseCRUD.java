@@ -14,6 +14,8 @@ public interface WarehouseCRUD {
 
     public abstract List<Warehouse> get();
 
+    public abstract List<Warehouse> getBy(String filter);
+
     public abstract void update(Warehouse warehouse);
 
     public abstract void delete(int id);

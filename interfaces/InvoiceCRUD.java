@@ -14,6 +14,8 @@ public interface InvoiceCRUD {
 
     public abstract List<Invoice> get();
 
+    public abstract List<Invoice> getBy(String filter);
+
     public abstract void update(Invoice invoice);
 
     public abstract void delete(int id);

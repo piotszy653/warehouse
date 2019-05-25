@@ -14,6 +14,8 @@ public interface ProductCRUD {
 
     public abstract List<Product> get();
 
+    public abstract List<Product> getBy(String filter);
+
     public abstract void update(Product product);
 
     public abstract void delete(int id);
