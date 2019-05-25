@@ -20,7 +20,6 @@ public class InvoiceEJB implements InvoiceCRUD {
     public void save(Invoice invoice) {
         System.out.println("Creating Invoice!");
         manager.persist(invoice);
-        System.out.println("Invoice created. "+invoice.toString());
     }
 
     @Override
