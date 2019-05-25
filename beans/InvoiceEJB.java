@@ -9,7 +9,7 @@ import javax.persistence.Query;
 import java.util.List;
 
 @Stateless
-public class ClientEJB {
+public class InvoiceEJB {
 
     @PersistenceContext(name="warehouse")
     EntityManager manager;
@@ -32,9 +32,17 @@ public class ClientEJB {
         return clients;
     }
 
-    public List<Client> getBy(String filter){
-        Query q = manager.createQuery("select c from Client c where c."+filter+" like :"+filter);
-        q.setParameter(filter, filter);
+    public List<Client> getByName(String name) {
+        Query q = manager.createQuery("select c from Client c where c.name like :name");
+        q.setParameter("name", name);
+        @SuppressWarnings("unchecked")
+        List<Client> clients =q.getResultList();
+        return clients;
+    }
+
+    public List<Client> getByMail(String mail) {
+        Query q = manager.createQuery("select c from Client c where c.mail like :mail");
+        q.setParameter("mail", mail);
         @SuppressWarnings("unchecked")
         List<Client> clients =q.getResultList();
         return clients;
@@ -47,6 +55,5 @@ public class ClientEJB {
     public void delete(int id) {
         manager.remove(manager.find(Client.class, id));
     }
-
 
 }
