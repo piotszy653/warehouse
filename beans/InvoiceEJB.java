@@ -1,6 +1,7 @@
 package warehouse.beans;
 
-import warehouse.domains.Client;
+import warehouse.domains.Invoice;
+import warehouse.interfaces.InvoiceCRUD;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -9,51 +10,48 @@ import javax.persistence.Query;
 import java.util.List;
 
 @Stateless
-public class InvoiceEJB {
+public class InvoiceEJB implements InvoiceCRUD {
 
     @PersistenceContext(name="warehouse")
     EntityManager manager;
 
 
-    public void save(Client client) {
-        System.out.println("Creating Client!");
-        manager.persist(client);
-        System.out.println("Client created. "+client.toString());
+    @Override
+    public void save(Invoice invoice) {
+        System.out.println("Creating Invoice!");
+        manager.persist(invoice);
+        System.out.println("Invoice created. "+invoice.toString());
     }
 
-    public Client get(int id) {
-        return manager.find(Client.class, id);
+    @Override
+    public Invoice get(int id) {
+        return manager.find(Invoice.class, id);
     }
 
-    public List<Client> get() {
-        Query q = manager.createQuery("select c from Client c");
+    @Override
+    public List<Invoice> get() {
+        Query q = manager.createQuery("select i from Invoice i");
         @SuppressWarnings("unchecked")
-        List<Client> clients = q.getResultList();
-        return clients;
+        List<Invoice> invoices = q.getResultList();
+        return invoices;
     }
 
-    public List<Client> getByName(String name) {
-        Query q = manager.createQuery("select c from Client c where c.name like :name");
-        q.setParameter("name", name);
+    @Override
+    public List<Invoice> getBy(String filter){
+        Query q = manager.createQuery("select i from Invoice i where i."+filter+" like :"+filter);
+        q.setParameter(filter, filter);
         @SuppressWarnings("unchecked")
-        List<Client> clients =q.getResultList();
-        return clients;
+        List<Invoice> invoices =q.getResultList();
+        return invoices;
     }
 
-    public List<Client> getByMail(String mail) {
-        Query q = manager.createQuery("select c from Client c where c.mail like :mail");
-        q.setParameter("mail", mail);
-        @SuppressWarnings("unchecked")
-        List<Client> clients =q.getResultList();
-        return clients;
+    @Override
+    public void update(Invoice invoice) {
+        manager.merge(invoice);
     }
 
-    public void update(Client client) {
-        manager.merge(client);
-    }
-
+    @Override
     public void delete(int id) {
-        manager.remove(manager.find(Client.class, id));
+        manager.remove(manager.find(Invoice.class, id));
     }
-
 }

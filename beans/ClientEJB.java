@@ -1,6 +1,7 @@
 package warehouse.beans;
 
 import warehouse.domains.Client;
+import warehouse.interfaces.ClientCRUD;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -9,22 +10,25 @@ import javax.persistence.Query;
 import java.util.List;
 
 @Stateless
-public class ClientEJB {
+public class ClientEJB implements ClientCRUD {
 
     @PersistenceContext(name="warehouse")
     EntityManager manager;
 
 
+    @Override
     public void save(Client client) {
         System.out.println("Creating Client!");
         manager.persist(client);
         System.out.println("Client created. "+client.toString());
     }
 
+    @Override
     public Client get(int id) {
         return manager.find(Client.class, id);
     }
 
+    @Override
     public List<Client> get() {
         Query q = manager.createQuery("select c from Client c");
         @SuppressWarnings("unchecked")
@@ -32,6 +36,7 @@ public class ClientEJB {
         return clients;
     }
 
+    @Override
     public List<Client> getBy(String filter){
         Query q = manager.createQuery("select c from Client c where c."+filter+" like :"+filter);
         q.setParameter(filter, filter);
@@ -40,13 +45,13 @@ public class ClientEJB {
         return clients;
     }
 
+    @Override
     public void update(Client client) {
         manager.merge(client);
     }
 
+    @Override
     public void delete(int id) {
         manager.remove(manager.find(Client.class, id));
     }
-
-
 }
