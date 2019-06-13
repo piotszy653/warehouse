@@ -39,7 +39,6 @@ public class WarehouseEJB {
 
     public List<Warehouse> getBy(String filter, String value){
         Query q = manager.createQuery("select w from Warehouse w where w."+filter+" = '"+value+"'");
-      //  q.setParameter("value", value);
         @SuppressWarnings("unchecked")
         List<Warehouse> warehouses =q.getResultList();
         for(Warehouse warehouse: warehouses){

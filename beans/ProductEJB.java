@@ -33,9 +33,7 @@ public class ProductEJB {
     }
 
     public List<Product> getBy(String filter, String value){
-        Query q = manager.createQuery("select p from Product p where p.filter = value");
-        q.setParameter("filter", filter);
-        q.setParameter("value",value);
+    	 Query q = manager.createQuery("select p from Product p where p."+filter+" = '"+value+"'");
         @SuppressWarnings("unchecked")
         List<Product> products =q.getResultList();
         return products;

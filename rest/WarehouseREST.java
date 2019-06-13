@@ -71,7 +71,7 @@ public class WarehouseREST implements WarehouseCRUD {
 	public Warehouse addProduct(@PathParam("warehouseId") Integer warehouseId, @PathParam("productId") Integer productId){
 		Warehouse warehouse = bean.get(warehouseId);
 		Product product = productBean.get(productId);
-		//warehouse.getProducts().add(product);
+		warehouse.getProducts().add(product);
 		bean.update(warehouse);
 		return warehouse;
 	}
