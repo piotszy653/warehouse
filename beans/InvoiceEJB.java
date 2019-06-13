@@ -33,8 +33,7 @@ public class InvoiceEJB {
     }
 
     public List<Invoice> getBy(String filter, String value){
-        Query q = manager.createQuery("select i from Invoice i where i."+filter+" like :"+value);
-        q.setParameter(filter, value);
+    	Query q = manager.createQuery("select i from Invoice i where i."+filter+" = '"+value+"'");
         @SuppressWarnings("unchecked")
         List<Invoice> invoices =q.getResultList();
         return invoices;

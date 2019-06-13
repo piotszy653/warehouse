@@ -38,8 +38,7 @@ public class ClientEJB {
     }
 
     public List<Client> getBy(String filter, String value){
-        Query q = manager.createQuery("select c from Client c where c."+filter+" like :"+value);
-        q.setParameter(filter, value);
+        Query q = manager.createQuery("select c from Client c where c."+filter+" = '"+value+"'");
         @SuppressWarnings("unchecked")
         List<Client> clients =q.getResultList();
         for(Client client: clients){
