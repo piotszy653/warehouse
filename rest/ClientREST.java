@@ -1,7 +1,7 @@
 package warehouse.rest;
 
+import warehouse.DAO.Client;
 import warehouse.beans.ClientEJB;
-import warehouse.domains.Client;
 import warehouse.interfaces.ClientCRUD;
 
 import javax.ejb.EJB;
@@ -22,9 +22,10 @@ public class ClientREST implements ClientCRUD {
 
 	@Override
 	@POST
-	public void save(Client client) {
+	public Client save(Client client) {
 		bean.save(client);
 		System.out.println("Client created. "+client.toString());
+		return client;
 	}
 
 	@Override
@@ -42,19 +43,22 @@ public class ClientREST implements ClientCRUD {
 
 	@Override
 	@GET
-	@Path("/{filter}")
-	public List<Client> getBy(@PathParam("filter") String filter) {
-		return bean.getBy(filter);
+	@Path("/{filter}/{value}")
+	public List<Client> getBy(@PathParam("filter") String filter, @PathParam("value") String value) {
+		return bean.getBy(filter, value);
 	}
 
 	@Override
 	@PUT
-	public void update(Client client) {
+	public Client update(Client client) {
 		try {
 			bean.update(client);
+			return client;
 		} catch (Exception e) {
 			e.printStackTrace();
+			return null;
 		}
+		
 	}
 
 

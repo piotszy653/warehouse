@@ -1,33 +1,30 @@
 package warehouse.beans;
 
-import warehouse.domains.Invoice;
-import warehouse.interfaces.InvoiceCRUD;
-
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+
+import warehouse.DAO.Invoice;
+
 import java.util.List;
 
 @Stateless
-public class InvoiceEJB implements InvoiceCRUD {
+public class InvoiceEJB {
 
     @PersistenceContext(name="warehouse")
     EntityManager manager;
 
 
-    @Override
     public void save(Invoice invoice) {
         System.out.println("Creating Invoice!");
         manager.persist(invoice);
     }
 
-    @Override
     public Invoice get(int id) {
         return manager.find(Invoice.class, id);
     }
 
-    @Override
     public List<Invoice> get() {
         Query q = manager.createQuery("select i from Invoice i");
         @SuppressWarnings("unchecked")
@@ -35,21 +32,18 @@ public class InvoiceEJB implements InvoiceCRUD {
         return invoices;
     }
 
-    @Override
-    public List<Invoice> getBy(String filter){
-        Query q = manager.createQuery("select i from Invoice i where i."+filter+" like :"+filter);
-        q.setParameter(filter, filter);
+    public List<Invoice> getBy(String filter, String value){
+        Query q = manager.createQuery("select i from Invoice i where i."+filter+" like :"+value);
+        q.setParameter(filter, value);
         @SuppressWarnings("unchecked")
         List<Invoice> invoices =q.getResultList();
         return invoices;
     }
 
-    @Override
     public void update(Invoice invoice) {
         manager.merge(invoice);
     }
 
-    @Override
     public void delete(int id) {
         manager.remove(manager.find(Invoice.class, id));
     }

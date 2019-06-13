@@ -1,7 +1,9 @@
 package warehouse.rest;
 
+import warehouse.DAO.Product;
+import warehouse.DAO.Warehouse;
+import warehouse.beans.ProductEJB;
 import warehouse.beans.WarehouseEJB;
-import warehouse.domains.Warehouse;
 import warehouse.interfaces.WarehouseCRUD;
 
 import javax.ejb.EJB;
@@ -19,12 +21,16 @@ public class WarehouseREST implements WarehouseCRUD {
 
 	@EJB
 	WarehouseEJB bean;
+	
+	@EJB
+	ProductEJB productBean;
 
 	@Override
 	@POST
-	public void save(Warehouse warehouse) {
+	public Warehouse save(Warehouse warehouse) {
 		bean.save(warehouse);
 		System.out.println("Warehouse created. "+warehouse.toString());
+		return warehouse;
 	}
 
 	@Override
@@ -42,21 +48,33 @@ public class WarehouseREST implements WarehouseCRUD {
 
 	@Override
 	@GET
-	@Path("/{filter}")
-	public List<Warehouse> getBy(@PathParam("filter") String filter) {
-		return bean.getBy(filter);
+	@Path("/{filter}/{value}")
+	public List<Warehouse> getBy(@PathParam("filter") String filter, @PathParam("value") String value) {
+		return bean.getBy(filter, value);
 	}
 
 	@Override
 	@PUT
-	public void update(Warehouse warehouse) {
+	public Warehouse update(Warehouse warehouse) {
 		try {
 			bean.update(warehouse);
+			return warehouse;
 		} catch (Exception e) {
 			e.printStackTrace();
+			return null;
 		}
 	}
-
+	
+	@Override
+	@PUT
+	@Path("/{warehouseId}/{productId}")
+	public Warehouse addProduct(@PathParam("warehouseId") Integer warehouseId, @PathParam("productId") Integer productId){
+		Warehouse warehouse = bean.get(warehouseId);
+		Product product = productBean.get(productId);
+		//warehouse.getProducts().add(product);
+		bean.update(warehouse);
+		return warehouse;
+	}
 
 	@Override
 	@DELETE

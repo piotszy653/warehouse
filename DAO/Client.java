@@ -1,14 +1,20 @@
-package warehouse.domains;
+package warehouse.DAO;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@XmlRootElement
 public class Client implements Serializable {
 
-    @Id
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	@Id
     @GeneratedValue(strategy = GenerationType.TABLE)
     int id;
 
@@ -18,7 +24,7 @@ public class Client implements Serializable {
     private String mail = null;
 
     @OneToMany(mappedBy="client",fetch=FetchType.LAZY)
-    private List<Invoice> invoices = new ArrayList<>();
+    private List<Invoice> invoices;
 
 
     public int getId(){

@@ -1,22 +1,25 @@
 package warehouse.interfaces;
 
-import warehouse.domains.Warehouse;
-
 import javax.ejb.Local;
+
+import warehouse.DAO.Warehouse;
+
 import java.util.List;
 
 @Local
 public interface WarehouseCRUD {
 
-    public abstract void save(Warehouse warehouse);
-
+    public abstract Warehouse save(Warehouse warehouse);
+    
     public abstract Warehouse get(int id);
 
     public abstract List<Warehouse> get();
 
-    public abstract List<Warehouse> getBy(String filter);
+    public abstract List<Warehouse> getBy(String filter, String value);
 
-    public abstract void update(Warehouse warehouse);
+    public abstract Warehouse update(Warehouse warehouse);
+    
+    public abstract Warehouse addProduct(Integer warehouseId, Integer productId);
 
     public abstract void delete(int id);
 

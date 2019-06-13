@@ -1,55 +1,57 @@
 package warehouse.beans;
 
-import warehouse.domains.Warehouse;
-import warehouse.interfaces.WarehouseCRUD;
-
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+
+import warehouse.DAO.Warehouse;
+
 import java.util.List;
 
 @Stateless
-public class WarehouseEJB implements WarehouseCRUD {
+public class WarehouseEJB {
 
     @PersistenceContext(name="warehouse")
     EntityManager manager;
 
 
-    @Override
     public void save(Warehouse warehouse) {
         System.out.println("Creating Warehouse!");
         manager.persist(warehouse);
     }
 
-    @Override
     public Warehouse get(int id) {
-        return manager.find(Warehouse.class, id);
+        Warehouse warehouse = manager.find(Warehouse.class, id);
+        warehouse.setProducts(null);
+        return warehouse;
     }
 
-    @Override
     public List<Warehouse> get() {
         Query q = manager.createQuery("select w from Warehouse w");
         @SuppressWarnings("unchecked")
         List<Warehouse> warehouses = q.getResultList();
+        for(Warehouse warehouse: warehouses){
+        	warehouse.setProducts(null);
+        }
         return warehouses;
     }
 
-    @Override
-    public List<Warehouse> getBy(String filter){
-        Query q = manager.createQuery("select w from Warehouse w where w."+filter+" like :"+filter);
-        q.setParameter(filter, filter);
+    public List<Warehouse> getBy(String filter, String value){
+        Query q = manager.createQuery("select w from Warehouse w where w."+filter+" like :"+value);
+        q.setParameter(filter, value);
         @SuppressWarnings("unchecked")
         List<Warehouse> warehouses =q.getResultList();
+        for(Warehouse warehouse: warehouses){
+        	warehouse.setProducts(null);
+        }
         return warehouses;
     }
 
-    @Override
     public void update(Warehouse warehouse) {
         manager.merge(warehouse);
     }
 
-    @Override
     public void delete(int id) {
         manager.remove(manager.find(Warehouse.class, id));
     }

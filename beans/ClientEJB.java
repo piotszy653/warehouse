@@ -1,55 +1,57 @@
 package warehouse.beans;
 
-import warehouse.domains.Client;
-import warehouse.interfaces.ClientCRUD;
-
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+
+import warehouse.DAO.Client;
+
 import java.util.List;
 
 @Stateless
-public class ClientEJB implements ClientCRUD {
+public class ClientEJB {
 
     @PersistenceContext(name="warehouse")
     EntityManager manager;
 
 
-    @Override
     public void save(Client client) {
         System.out.println("Creating Client!");
         manager.persist(client);
     }
 
-    @Override
     public Client get(int id) {
-        return manager.find(Client.class, id);
+        Client client = manager.find(Client.class, id);
+        client.setInvoices(null);
+        return client;
     }
 
-    @Override
     public List<Client> get() {
         Query q = manager.createQuery("select c from Client c");
         @SuppressWarnings("unchecked")
         List<Client> clients = q.getResultList();
+        for(Client client: clients){
+        	client.setInvoices(null);
+        }
         return clients;
     }
 
-    @Override
-    public List<Client> getBy(String filter){
-        Query q = manager.createQuery("select c from Client c where c."+filter+" like :"+filter);
-        q.setParameter(filter, filter);
+    public List<Client> getBy(String filter, String value){
+        Query q = manager.createQuery("select c from Client c where c."+filter+" like :"+value);
+        q.setParameter(filter, value);
         @SuppressWarnings("unchecked")
         List<Client> clients =q.getResultList();
+        for(Client client: clients){
+        	client.setInvoices(null);
+        }
         return clients;
     }
 
-    @Override
     public void update(Client client) {
         manager.merge(client);
     }
 
-    @Override
     public void delete(int id) {
         manager.remove(manager.find(Client.class, id));
     }

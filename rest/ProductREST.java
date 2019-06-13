@@ -1,8 +1,8 @@
 package warehouse.rest;
 
 
+import warehouse.DAO.Product;
 import warehouse.beans.ProductEJB;
-import warehouse.domains.Product;
 import warehouse.interfaces.ProductCRUD;
 
 import javax.ejb.EJB;
@@ -23,9 +23,10 @@ public class ProductREST implements ProductCRUD {
 
 	@Override
 	@POST
-	public void save(Product product) {
+	public Product save(Product product) {
 		bean.save(product);
 		System.out.println("Product created. "+product.toString());
+		return product;
 	}
 
 	@Override
@@ -43,18 +44,20 @@ public class ProductREST implements ProductCRUD {
 
 	@Override
 	@GET
-	@Path("/{filter}")
-	public List<Product> getBy(@PathParam("filter") String filter) {
-		return bean.getBy(filter);
+	@Path("/{filter}/{value}")
+	public List<Product> getBy(@PathParam("filter") String filter, @PathParam("value") String value) {
+		return bean.getBy(filter, value);
 	}
 
 	@Override
 	@PUT
-	public void update(Product product) {
+	public Product update(Product product) {
 		try {
 			bean.update(product);
+			return product;
 		} catch (Exception e) {
 			e.printStackTrace();
+			return null;
 		}
 	}
 

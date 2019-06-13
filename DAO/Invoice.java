@@ -1,15 +1,17 @@
-package warehouse.domains;
-
-import warehouse.domains.Client;
+package warehouse.DAO;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
 
 @Entity
 public class Invoice implements Serializable {
 
-    @Id
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	@Id
     @GeneratedValue(strategy = GenerationType.TABLE)
     int id;
 
@@ -17,7 +19,7 @@ public class Invoice implements Serializable {
     Float totalCosts;
 
     @Column(nullable = false)
-    Date date;
+    String date;
 
     @ManyToOne(fetch=FetchType.EAGER)
     private Client client;
@@ -41,11 +43,11 @@ public class Invoice implements Serializable {
         this.totalCosts=totalCosts;
     }
 
-    public Date getDate(){
+    public String getDate(){
         return date;
     }
 
-    public void setDate(Date date){
+    public void setDate(String date){
         this.date=date;
     }
 
@@ -61,7 +63,7 @@ public class Invoice implements Serializable {
 
     @Override
     public String toString(){
-        return id+". Invoice. Date: "+date.toString()+", client: "+client.getName()+", total costs: "+totalCosts;
+        return id+". Invoice. Date: "+date+", client: "+client.getName()+", total costs: "+totalCosts;
     }
 
 }

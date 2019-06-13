@@ -1,4 +1,4 @@
-package warehouse.domains;
+package warehouse.DAO;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -6,7 +6,12 @@ import java.io.Serializable;
 @Entity
 public class Product implements Serializable {
 
-    @Id
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	@Id
     @GeneratedValue(strategy = GenerationType.TABLE)
     int id;
 
@@ -30,7 +35,7 @@ public class Product implements Serializable {
     private Warehouse warehouse;
 
     @ManyToOne(fetch=FetchType.EAGER)
-    private Invoice invoice;
+    private Invoice invoice = null;
 
 
 

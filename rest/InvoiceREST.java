@@ -1,8 +1,8 @@
 package warehouse.rest;
 
 
+import warehouse.DAO.Invoice;
 import warehouse.beans.InvoiceEJB;
-import warehouse.domains.Invoice;
 import warehouse.interfaces.InvoiceCRUD;
 
 import javax.ejb.EJB;
@@ -23,9 +23,10 @@ public class InvoiceREST implements InvoiceCRUD {
 
 	@Override
 	@POST
-	public void save(Invoice invoice) {
+	public Invoice save(Invoice invoice) {
 		bean.save(invoice);
 		System.out.println("Invoice created. "+invoice.toString());
+		return invoice;
 	}
 
 	@Override
@@ -43,18 +44,20 @@ public class InvoiceREST implements InvoiceCRUD {
 
 	@Override
 	@GET
-	@Path("/{filter}")
-	public List<Invoice> getBy(@PathParam("filter") String filter) {
-		return bean.getBy(filter);
+	@Path("/{filter}/{value}")
+	public List<Invoice> getBy(@PathParam("filter") String filter, @PathParam("value") String value) {
+		return bean.getBy(filter, value);
 	}
 
 	@Override
 	@PUT
-	public void update(Invoice invoice) {
+	public Invoice update(Invoice invoice) {
 		try {
 			bean.update(invoice);
+			return invoice;
 		} catch (Exception e) {
 			e.printStackTrace();
+			return null;
 		}
 	}
 

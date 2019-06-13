@@ -1,14 +1,15 @@
-package warehouse.domains;
+package warehouse.DAO;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 public class Warehouse implements Serializable {
 
-    @Id
+	private static final long serialVersionUID = 1L;
+
+	@Id
     @GeneratedValue(strategy= GenerationType.TABLE)
     int id;
 
@@ -19,7 +20,7 @@ public class Warehouse implements Serializable {
     private String address;
 
     @OneToMany(mappedBy="warehouse",fetch=FetchType.LAZY)
-     private List<Product> products = new ArrayList<>();
+     private List<Product> products;
 
     public int getId(){
         return id;
@@ -43,6 +44,10 @@ public class Warehouse implements Serializable {
 
     public void setAddress(String address){
         this.address=address;
+    }
+    
+    public void setProducts(List<Product> products){
+    	this.products=products;
     }
 
     public List<Product> getProducts(){
